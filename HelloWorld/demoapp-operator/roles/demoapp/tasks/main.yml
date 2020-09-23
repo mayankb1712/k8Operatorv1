@@ -1,0 +1,9 @@
+---
+# tasks file for demoapp
+- name: create Name space
+  k8s:
+    state: present
+    api_version: v1
+    kind: Namespace
+    name: myapp
+    

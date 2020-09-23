@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demoapp
+spec:
+  selector:
+      matchLabels:
+        app: demoapp
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: demoapp
+    spec:
+      containers:
+        - name: demoapp
+          image: mayankb1712/startertutorial:hellomongo
+          ports:
+            - containerPort: 8102
+          env:
+            - name: spring.data.mongodb.host
+              value: demodb
+              #valueFrom: 
+              #  configMapKeyRef: 
+              #    name: demoapp-configmap
+              #    key:  database
+          livenessProbe:
+            initialDelaySeconds: 5
+            periodSeconds: 30
+            timeoutSeconds: 15
+            httpGet:
+              path: /helloMongo
+              port: 8102 
+          readinessProbe:
+            httpGet:
+              path: /helloMongo
+              port: 8102
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            timeoutSeconds: 15
+            
+              
+                   

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demodb
+spec:
+  selector:
+      matchLabels:
+        app: demodb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: demodb
+    spec:
+      containers:
+        - name: demodb
+          image: mongo
+          ports:
+            - containerPort: 27017

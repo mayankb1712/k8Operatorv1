@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: demoapp
+spec:
+  selector:
+    app: demoapp
+  ports:
+  - protocol: TCP
+    port: 8102
+    nodePort: 30001
+  type: NodePort

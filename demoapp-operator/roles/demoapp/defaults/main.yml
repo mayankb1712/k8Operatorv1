@@ -1,0 +1,5 @@
+---
+# defaults file for demoapp
+size: 1
+metaname: example-demoapp
+metanamespace: default

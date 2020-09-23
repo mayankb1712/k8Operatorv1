@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: demodb
+spec:
+  selector:
+    app: demodb
+  ports:
+  - protocol: TCP
+    port: 27017
+  type: ClusterIP
