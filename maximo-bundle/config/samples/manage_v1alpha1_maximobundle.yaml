@@ -1,0 +1,6 @@
+apiVersion: manage.example.com/v1alpha1
+kind: MaximoBundle
+metadata:
+  name: maximobundle-sample
+spec:
+  size: 1

@@ -1,0 +1,19 @@
+---
+# tasks file for demoapp
+- name: start mongodb
+  community.kubernetes.k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', './../templates/mongoDeployment.yml.j2') | from_yaml }}"
+- name: start mongodb Service
+  community.kubernetes.k8s: 
+    state: "{{state}}"
+    definition: "{{ lookup('template', './../templates/mongoService.yml.j2') | from_yaml }}"
+- name: start demo app
+  community.kubernetes.k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', './../templates/demoappDeployment.yml.j2') | from_yaml }}"
+- name: start demo app Service
+  community.kubernetes.k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', './../templates/demoappService.yml.j2') | from_yaml }}"
+

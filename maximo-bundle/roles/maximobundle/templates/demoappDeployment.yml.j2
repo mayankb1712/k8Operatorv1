@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ ansible_operator_meta.name }}-demoapp
+  namespace: {{ ansible_operator_meta.namespace }}
+  labels:
+    app: demoapp
+spec:
+  replicas: {{ size }}
+  selector:
+    matchLabels:
+      app: demoapp
+  template:
+    metadata:
+      labels:
+        app: demoapp
+    spec:
+      containers:
+      - image: "docker.io/mayankb1712/startertutorial:hellomongo"
+        name: demoapp
+        ports:
+        - containerPort: 8102
+          protocol: TCP
+        env: 
+          - name: spring.data.mongodb.host
+            value: demodb

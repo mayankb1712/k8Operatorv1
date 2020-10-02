@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: 'demodb'
+  namespace: '{{ ansible_operator_meta.namespace }}'
+spec:
+  selector:
+    app: demodb
+  type: ClusterIP
+  ports: 
+  - port: 27017
+    protocol: TCP  

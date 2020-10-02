@@ -1,0 +1,62 @@
+---
+# tasks file for demoapp
+- name: start mongodb
+  community.kubernetes.k8s:
+  #
+    definition: "{{ lookup('file', './../templates/mongoDeployment.yml') | from_yaml }}"
+- name: start mongodb Service
+  community.kubernetes.k8s: 
+    definition:
+      kind: Service
+      apiVersion: v1
+      metadata:
+        name: 'demodb'
+        namespace: '{{ ansible_operator_meta.namespace }}'
+      spec:
+        selector:
+          app: demodb
+        type: ClusterIP
+        ports: 
+        - port: 27017
+          protocol: TCP               
+- name: start demo app
+  community.kubernetes.k8s:
+    definition:
+      kind: Deployment
+      apiVersion: apps/v1
+      metadata:
+        name: '{{ ansible_operator_meta.name }}-demoapp'
+        namespace: '{{ ansible_operator_meta.namespace }}'
+      spec:
+        replicas: "{{size}}"
+        selector:
+          matchLabels:
+            app: demoapp
+        template:
+          metadata:
+            labels:
+              app: demoapp
+          spec:
+            containers:
+            - name: demoapp
+              image: "docker.io/mayankb1712/startertutorial:hellomongo"
+              ports:
+                - containerPort: 8102
+              env:
+                - name: spring.data.mongodb.host
+                  value: demodb
+- name: start demo app Service
+  community.kubernetes.k8s:
+    definition:
+      kind: Service
+      apiVersion: v1
+      metadata:
+        name: 'demoapp'
+        namespace: '{{ ansible_operator_meta.namespace }}'
+      spec:
+        selector:
+          app: demoapp
+        type: NodePort
+        ports: 
+        - port: 8102
+          nodePort: 30001

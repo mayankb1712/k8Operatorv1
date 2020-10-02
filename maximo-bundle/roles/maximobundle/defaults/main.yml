@@ -1,0 +1,6 @@
+---
+# defaults file for MaximoBundle
+ansible_operator_meta_namespace: maximo-bundle-system
+ansible_operator_meta_name: maximo-bundle
+size: 2
+state: present
